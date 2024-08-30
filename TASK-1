@@ -1,0 +1,108 @@
+#creating a table
+CREATE TABLE Books (
+    book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    author TEXT NOT NULL,
+    genre TEXT,
+    published_year INTEGER,
+    available_copies INTEGER NOT NULL
+);
+
+CREATE TABLE Members (
+    member_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    phone_number TEXT,
+    join_date DATE NOT NULL
+);
+
+CREATE TABLE Transactions (
+    transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    member_id INTEGER,
+    book_id INTEGER,
+    borrow_date DATE NOT NULL,
+    return_date DATE,
+    FOREIGN KEY (member_id) REFERENCES Members(member_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+
+#inserting data
+-- Insert books into the Books table
+INSERT INTO Books (title, author, genre, published_year, available_copies) VALUES
+('The Great Gatsby', 'F. Scott Fitzgerald', 'Fiction', 1925, 3),
+('To Kill a Mockingbird', 'Harper Lee', 'Fiction', 1960, 5),
+('1984', 'George Orwell', 'Dystopian', 1949, 4);
+
+-- Insert members into the Members table
+INSERT INTO Members (first_name, last_name, email, phone_number, join_date) VALUES
+('John', 'Doe', 'john.doe@example.com', '123-456-7890', '2024-01-01'),
+('Jane', 'Smith', 'jane.smith@example.com', '098-765-4321', '2024-02-15');
+
+-- Insert transactions into the Transactions table
+INSERT INTO Transactions (member_id, book_id, borrow_date) VALUES
+(1, 1, '2024-03-01'),
+(2, 2, '2024-03-05');
+
+
+#updating data
+-- Update the number of available copies when a book is borrowed
+UPDATE Books
+SET available_copies = available_copies - 1
+WHERE book_id = 1;
+
+-- Update a member's email
+UPDATE Members
+SET email = 'new.email@example.com'
+WHERE member_id = 1;
+
+-- Update a transaction to set the return date
+UPDATE Transactions
+SET return_date = '2024-03-10'
+WHERE transaction_id = 1;
+
+
+#deleting data
+-- Delete a book from the Books table
+DELETE FROM Books
+WHERE book_id = 3;
+
+-- Delete a member from the Members table
+DELETE FROM Members
+WHERE member_id = 2;
+
+-- Delete a transaction from the Transactions table
+DELETE FROM Transactions
+WHERE transaction_id = 1;
+
+
+#retriving data
+-- Retrieve all books in the library
+SELECT * FROM Books;
+
+-- Retrieve all members in the library
+SELECT * FROM Members;
+
+-- Retrieve all transactions in the library
+SELECT * FROM Transactions;
+
+-- Retrieve all books borrowed by a specific member
+SELECT Books.title, Books.author, Transactions.borrow_date, Transactions.return_date
+FROM Transactions
+JOIN Books ON Transactions.book_id = Books.book_id
+WHERE Transactions.member_id = 1;
+
+-- Retrieve all members who have borrowed a specific book
+SELECT Members.first_name, Members.last_name, Transactions.borrow_date, Transactions.return_date
+FROM Transactions
+JOIN Members ON Transactions.member_id = Members.member_id
+WHERE Transactions.book_id = 2;
+
+-- Retrieve all currently borrowed books (i.e., books without a return date)
+SELECT Books.title, Members.first_name, Members.last_name, Transactions.borrow_date
+FROM Transactions
+JOIN Books ON Transactions.book_id = Books.book_id
+JOIN Members ON Transactions.member_id = Members.member_id
+WHERE Transactions.return_date yIS NULL;
+
