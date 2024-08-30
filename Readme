@@ -1,0 +1,20 @@
+Name: N.V.Dheeraj
+Company: CODTECH IT SOLUTIONS
+ID: CT6WDS1700
+Domain: Data Analytics
+Duration:  AUGUST to OCTOBER 2024.
+
+Overview of the Project
+In this project, I will design and implement a database to manage a library's book inventory, member information, and borrow/return transactions. 
+The goal is to learn basic SQL commands and understand the principles of relational database design through a practical, hands-on approach.
+
+To achieve this, I will create three primary tables:
+
+Books: This table will store all relevant information about each book in the library, such as the title, author, genre, published year, and the number of available copies. 
+This will help me keep track of the library's inventory.
+
+Members: This table will contain personal details of library members, including their names, contact information, and the date they joined the library.
+This will allow me to manage member information effectively.
+
+Transactions: This table will record all borrow and return transactions, linking each member to the books they borrow, along with the dates these transactions occur.
+This will enable me to monitor which books are currently checked out and which have been returned.
